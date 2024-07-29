@@ -11,6 +11,7 @@ const port = 3000;
 app.use(cors());
 app.use(express.json());
 
+// index.htmlのfetchはここを指している
 app.post('/api/openai', async (req, res) => {
     const query = req.body.query;
 
