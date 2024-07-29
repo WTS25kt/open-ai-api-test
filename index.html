@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat with OpenAI</title>
+</head>
+<body>
+    <input type="text" id="input-box" placeholder="Ask me anything...">
+    <p id="result"></p>
+
+    <script>
+        document.getElementById('input-box').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                if (this.value.trim() !== '') {
+                    handleInput(this.value);
+                }
+            }
+        });
+
+        async function handleInput(query) {
+            console.log('Sending query:', query); // 送信するクエリをログに出力
+
+            try {
+                const response = await fetch('http://localhost:3000/api/openai', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ query: query })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+
+                if (data.error) {
+                    document.getElementById('result').textContent = 'エラーが発生しました: ' + data.error.details;
+                } else {
+                    document.getElementById('result').textContent = data.choices[0].message.content.trim();
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('result').textContent = 'エラーが発生しました。';
+            }
+        }
+    </script>
+</body>
+</html>
