@@ -1,7 +1,3 @@
-# pythonを使って接続の確認をする
-pythonpattern/
-pythonpattern/app.py
-
 # Logs
 logs
 *.log
