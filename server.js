@@ -24,7 +24,7 @@ app.post('/api/openai', async (req, res) => {
                 'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`
             },
             body: JSON.stringify({
-                model: 'gpt-3.5-turbo',
+                model: 'gpt-4o-mini', // モデルをGPT-4o miniに変更
                 messages: [
                     {
                         role: 'system',
