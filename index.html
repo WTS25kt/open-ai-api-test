@@ -23,19 +23,27 @@
         function handleInput(query) {
             console.log('Sending query:', query); // 送信するクエリをログに出力
 
-            fetch('/api/openai', {
+            fetch('http://localhost:3000/api/openai', { // 正しいURLを指定
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({ query: query })
-            }).then(response => response.json()).then(data => {
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
                 if (data.error) {
                     document.getElementById('result').textContent = 'エラーが発生しました: ' + data.error.details;
                 } else {
                     document.getElementById('result').textContent = data.choices[0].message.content.trim();
                 }
-            }).catch(error => {
+            })
+            .catch(error => {
                 console.error('Error:', error);
                 document.getElementById('result').textContent = 'エラーが発生しました。';
             });
