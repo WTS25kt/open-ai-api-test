@@ -19,6 +19,7 @@ async function testOpenAI() {
       ],
       max_tokens: 5,
     });
+    console.log('API接続成功:', response); // レスポンス全体をログに出力
     console.log('API接続成功:', response.choices[0].message.content.trim());
   } catch (error) {
     console.error('API接続エラー:', error);
