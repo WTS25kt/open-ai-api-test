@@ -1,21 +1,25 @@
 #!/usr/bin/env node
 
-const { Configuration, OpenAIApi } = require('openai');
-require('dotenv').config();
+import OpenAI from 'openai';
+import dotenv from 'dotenv';
 
-const configuration = new Configuration({
+dotenv.config();
+
+const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
-const openai = new OpenAIApi(configuration);
 
 async function testOpenAI() {
   try {
-    const response = await openai.createCompletion({
-      model: 'text-davinci-003',
-      prompt: 'Hello, OpenAI!',
+    const response = await openai.chat.completions.create({
+      model: 'gpt-3.5-turbo', // 新しいモデルに変更
+      messages: [
+        { role: 'system', content: 'You are a helpful assistant.' },
+        { role: 'user', content: 'Hello, OpenAI!' }
+      ],
       max_tokens: 5,
     });
-    console.log('API接続成功:', response.data.choices[0].text.trim());
+    console.log('API接続成功:', response.choices[0].message.content.trim());
   } catch (error) {
     console.error('API接続エラー:', error);
   }
