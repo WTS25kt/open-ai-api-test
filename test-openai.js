@@ -12,7 +12,7 @@ const openai = new OpenAI({
 async function testOpenAI() {
   try {
     const response = await openai.chat.completions.create({
-      model: 'gpt-3.5-turbo', // 新しいモデルに変更
+      model: 'gpt-4o-mini', // モデルをGPT-4o Miniに変更
       messages: [
         { role: 'system', content: 'You are a helpful assistant.' },
         { role: 'user', content: 'Hello, OpenAI!' }
